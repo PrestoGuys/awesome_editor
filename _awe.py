@@ -1,2 +1,2 @@
 from _assets import _main
-main.main()
+_main.main()
