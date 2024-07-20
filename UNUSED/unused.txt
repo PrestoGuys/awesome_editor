@@ -1,0 +1,5 @@
+		#resolution = 720 # pixels, 4:3 aspect ratio
+
+		#tempres = resolution * 1.5 # 40 threes, just in case
+		#window_width  = round(tempres)
+		#window_height = resolution
