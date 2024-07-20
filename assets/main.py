@@ -12,41 +12,6 @@ from tkinter import filedialog
 def main():
 	TextEditor()
 	
-'''
-	root = Tk()
-
-
-	resolution = 720 # pixels, 4:3 aspect ratio
-
-	tempres = resolution * 1.3333333333333333333333333333333333333333 # 40 threes, just in case
-	window_width  = round(tempres)
-	window_height = resolution
-
-	print(tempres)
-	print(window_width)
-
-	# gets screen_width and screen_height
-	screen_width  = root.winfo_screenwidth()
-	screen_height = root.winfo_screenheight()
-
-	# gets senter of the screen
-	center_x = int(screen_width/2 - window_width / 2)
-	center_y = int(screen_height/2 - window_height / 2)
-
-	# sets window size and centers it
-	root.geometry(f'{window_width}x{window_height}+{center_x}+{center_y}')
-
-	# This is the section of code which creates the main window
-	root.configure(background='#393939')
-	root.title('Awesome Editor - ')
-
-
-	root.mainloop()
-
-
-'''
-
-
 # Defining TextEditor Class
 class TextEditor:
 	# Defining Constructor
@@ -86,13 +51,16 @@ class TextEditor:
 		# Assigning root
 		self.root = root
 		
-		resolution = 720 # pixels, 4:3 aspect ratio
+		#resolution = 720 # pixels, 4:3 aspect ratio
 
-		tempres = resolution * 1.5 # 40 threes, just in case
-		window_width  = round(tempres)
-		window_height = resolution
+		#tempres = resolution * 1.5 # 40 threes, just in case
+		#window_width  = round(tempres)
+		#window_height = resolution
 
-		print(tempres)
+		window_width  = 1100
+		window_height = 750
+
+		#rint(tempres)
 		print(window_width)
 		print(window_height)
 
@@ -100,9 +68,12 @@ class TextEditor:
 		screen_width  = self.root.winfo_screenwidth()
 		screen_height = self.root.winfo_screenheight()
 
+		print(screen_width)
+		print(screen_height)
+
 		# gets senter of the screen
 		center_x = int(screen_width/2 - window_width / 2)
-		center_y = int(screen_height/2 - window_height / 2)
+		center_y = int((screen_height/2 - window_height / 2) + -50)
 
 		# sets window size and centers it
 		self.root.geometry(f'{window_width}x{window_height}+{center_x}+{center_y}')
@@ -113,7 +84,7 @@ class TextEditor:
 
 
 		# Title of the window
-		self.root.title('Awesome Editor - ')
+		#self.root.title('Starting Awesome Editor')
 		# Window Geometry
 		#self.root.geometry("1200x700+200+150")
 		# Initializing filename
@@ -200,6 +171,8 @@ class TextEditor:
 		# Packing Text Area to root window
 		self.txtarea.pack(fill=BOTH,expand=1)
 
+		#self.root.title('Awesome Editor')
+
 		# Calling shortcuts funtion
 		self.shortcuts()
 
@@ -208,10 +181,16 @@ class TextEditor:
 		# Checking if Filename is not None
 		if self.filename:
 			# Updating Title as filename
-			self.title.set(self.filename)
+			titlefile = self.filename
+
 		else:
 			# Updating Title as Untitled
-			self.title.set("Untitled")
+			titlefile = "Untitled"
+
+		print(titlefile)
+
+		self.title.set(titlefile)
+		self.root.title('Awesome Editor' + ' - ' + titlefile)
 
 	# Defining New file Function
 	def newfile(self,*args):
