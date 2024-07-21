@@ -5,8 +5,8 @@
 # Credit to www.codespeedy.com for some starter code.
 # Link: https://www.codespeedy.com/create-a-text-editor-in-python/
 
+# Importing Required Libraries 
 import toml
-import json
 
 # Inporting Tkinter
 import tkinter as tk
@@ -16,7 +16,7 @@ from tkinter import messagebox
 from tkinter import filedialog
 
 
-# Links
+# links to the text editor class?
 def main():
 	TextEditor()
 
@@ -69,11 +69,11 @@ class TextEditor:
 
 		# Assigning root
 		self.root = root
+
 		
 		# window width and window height of the program
 		window_width  = 1100
 		window_height = 750
-
 
 		print(window_width)
 		print(window_height)
@@ -93,7 +93,7 @@ class TextEditor:
 		self.root.geometry(f'{window_width}x{window_height}+{center_x}+{center_y}')
 
 
-
+		#root.overrideredirect(True)
 
 
 
@@ -359,6 +359,7 @@ class TextEditor:
 		# Binding Ctrl+e to exit funtion
 		self.txtarea.bind("<Control-q>",self.exit)
 
+		# sets cut, copy, and paste
 		self.txtarea.bind("<Control-x>",self.cut)
 		self.txtarea.bind("<Control-c>",self.copy)
 		self.txtarea.bind("<Control-v>",self.paste)
