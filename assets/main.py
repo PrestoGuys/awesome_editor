@@ -33,6 +33,7 @@ class TextEditor:
 		configfont = configtoml['Settings']['Font']
 
 
+		# sets background color from cofig file
 		if configtheme == 'dark':
 			bgcolor = '#333333'
 
@@ -40,6 +41,7 @@ class TextEditor:
 			bgcolor = '#fdfdfd'
 
 
+		# sets foreground color from cofig file
 		if configtheme == 'dark':
 			fgcolor = '#fdfdfd'
 
@@ -47,6 +49,7 @@ class TextEditor:
 			fgcolor = '#141414'
 
 
+		# prints the config gile settings
 		print('Config: ')
 		print(configtheme)
 		print(configfont)
@@ -55,19 +58,7 @@ class TextEditor:
 		print(fgcolor)
 
 
-
-		'''
-		# opens the config file and saves it in a variable 
-		with open('CONFIG/syntax_highlighting/markdown.toml', 'r') as f:
-			mdsyntax = toml.load(f)
-
-		print(mdsyntax["Main"]["file_ext"])
-		'''
-
-
-
-
-		# Assigning root
+		# assigns root
 		self.root = root
 
 		
@@ -75,6 +66,7 @@ class TextEditor:
 		window_width  = 1100
 		window_height = 750
 
+		# prints window width & height
 		print(window_width)
 		print(window_height)
 
@@ -82,6 +74,7 @@ class TextEditor:
 		screen_width  = self.root.winfo_screenwidth()
 		screen_height = self.root.winfo_screenheight()
 
+		# prints screen width and height
 		print(screen_width)
 		print(screen_height)
 
@@ -93,21 +86,14 @@ class TextEditor:
 		self.root.geometry(f'{window_width}x{window_height}+{center_x}+{center_y}')
 
 
-		#root.overrideredirect(True)
+		#for the bg color when load
+		self.root.config(bg=bgcolor)
 
 
+		self.filename = None        # initialize filename
+		self.title    = StringVar() # declare title variable
+		self.status   = StringVar() # declare status variable
 
-		# Title of the window
-		#self.root.title('Starting Awesome Editor')
-		# Window Geometry
-		#self.root.geometry("1200x700+200+150")
-		# Initializing filename
-		self.filename = None
-		print(self.filename)
-		# Declaring Title variable
-		self.title = StringVar()
-		# Declaring Status variable
-		self.status = StringVar()
 
 		# Creating Titlebar
 		self.titlebar = Label(self.root,textvariable=self.title,font=(configfont,15),bd=2,relief=GROOVE)
@@ -128,6 +114,7 @@ class TextEditor:
 		# Configuring menubar on root window
 		self.root.config(menu=self.menubar)
 
+
 		# Creating File Menu
 		self.filemenu = Menu(self.menubar,font=(configfont,12),activebackground="skyblue",tearoff=0)
 		# Adding New file Command
@@ -145,6 +132,7 @@ class TextEditor:
 		# Cascading filemenu to menubar
 		self.menubar.add_cascade(label="File", menu=self.filemenu)
 
+
 		# Creating Edit Menu
 		self.editmenu = Menu(self.menubar,font=(configfont,12),activebackground="skyblue",tearoff=0)
 		# Adding Cut text Command
@@ -158,7 +146,8 @@ class TextEditor:
 		# Adding Undo text Command
 		self.editmenu.add_command(label="Undo",accelerator="Ctrl+U",command=self.undo)
 		# Cascading editmenu to menubar
-		self.menubar.add_cascade(label="Edit", menu=self.editmenu)
+		self.menubar.add_cascade(label="Edit",menu=self.editmenu)
+
 
 		# Creating Help Menu
 		self.helpmenu = Menu(self.menubar,font=(configfont,12),activebackground="skyblue",tearoff=0)
@@ -167,17 +156,13 @@ class TextEditor:
 		# Cascading helpmenu to menubar
 		self.menubar.add_cascade(label="Help", menu=self.helpmenu)
 
-		# Creating Help Menu
-		self.ggmenu = Menu(self.menubar,font=(configfont,12),activebackground="skyblue",tearoff=0)
-		# Adding About Command
-		self.ggmenu.add_command(label="ghgh",command=self.bruhaddd)
-		# Cascading helpmenu to menubar
-		self.menubar.add_cascade(label="Im the heheman", menu=self.ggmenu)
 
 		# Creating Scrollbar
 		scrol_y = Scrollbar(self.root,orient=VERTICAL)
+		
 		# Creating Text Area
-		self.txtarea = Text(self.root,yscrollcommand=scrol_y.set,font=(configfont,15),state="normal",relief=GROOVE)
+		self.txtarea = Text(self.root, yscrollcommand=scrol_y.set, font=(configfont,15), state="normal", relief=GROOVE, bg=bgcolor, fg=fgcolor, borderwidth=0) # cursor="trek"
+		
 		# Packing scrollbar to root window
 		scrol_y.pack(side=RIGHT,fill=Y)
 		# Adding Scrollbar to text area
@@ -185,7 +170,6 @@ class TextEditor:
 		# Packing Text Area to root window
 		self.txtarea.pack(fill=BOTH,expand=1)
 
-		#self.root.title('Awesome Editor')
 
 		# Calling shortcuts funtion
 		self.shortcuts()

@@ -3,3 +3,24 @@
 		#tempres = resolution * 1.5 # 40 threes, just in case
 		#window_width  = round(tempres)
 		#window_height = resolution
+
+
+
+				'''
+		# opens the config file and saves it in a variable 
+		with open('CONFIG/syntax_highlighting/markdown.toml', 'r') as f:
+			mdsyntax = toml.load(f)
+
+		print(mdsyntax["Main"]["file_ext"])
+		'''
+
+
+		#root.overrideredirect(True)
+
+
+
+
+				# Title of the window
+		#self.root.title('Starting Awesome Editor')
+		# Window Geometry
+		#self.root.geometry("1200x700+200+150")
