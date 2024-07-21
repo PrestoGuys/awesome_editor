@@ -7,6 +7,7 @@
 
 # Importing Required Libraries 
 import toml
+#import webbrowser
 
 # Inporting Tkinter
 import tkinter as tk
@@ -28,9 +29,8 @@ class TextEditor:
 			configtoml = toml.load(f)
 
 
-		# gets data from config file
-		configtheme = configtoml['Settings']['Theme']
-		configfont = configtoml['Settings']['Font']
+		configtheme = configtoml['Settings']['Theme'] # gets theme from config
+		configfont = configtoml['Settings']['Font']   # gets font from config
 
 
 		# sets background color from cofig file
@@ -86,6 +86,10 @@ class TextEditor:
 		self.root.geometry(f'{window_width}x{window_height}+{center_x}+{center_y}')
 
 
+		icon = PhotoImage(file="assets/graphics/icon.png")
+		root.iconphoto(True,icon)
+
+
 		#for the bg color when load
 		self.root.config(bg=bgcolor)
 
@@ -95,19 +99,17 @@ class TextEditor:
 		self.status   = StringVar() # declare status variable
 
 
-		# Creating Titlebar
-		self.titlebar = Label(self.root,textvariable=self.title,font=(configfont,15),bd=2,relief=GROOVE)
-		# Packing Titlebar to root window
-		self.titlebar.pack(side=TOP,fill=BOTH)
-		# Calling Settitle Function
-		self.settitle()
+		self.titlebar = Label(self.root,textvariable=self.title,font=(configfont,15),bd=2,relief=GROOVE) # creating titlebar
+		self.titlebar.pack(side=TOP,fill=BOTH) # packing titlebar to root window
+		self.settitle() # Calling Settitle Function
+
 
 		# Creating Statusbar
 		self.statusbar = Label(self.root,textvariable=self.status,font=(configfont,15),bd=2,relief=GROOVE)
 		# Packing status bar to root window
 		self.statusbar.pack(side=BOTTOM,fill=BOTH)
 		# Initializing Status
-		self.status.set("Welcome To Text Editor")
+		self.status.set("Welcome to Awesome Editor")
 
 		# Creating Menubar
 		self.menubar = Menu(self.root,font=(configfont,15),activebackground="skyblue")
@@ -324,11 +326,8 @@ class TextEditor:
 
 	# Defining About Funtion
 	def infoabout(self):
-		messagebox.showinfo("About Text Editor","A Simple Text Editor\nCreated using Python.")
+		messagebox.showinfo("About Awesome Editor","Awesome Editor\nv0.0.1 - BETA\nMade By PrestoGuys in 2024\nLicense: https://www.gnu.org/licenses/gpl-3.0.txt")
 
-	# Defining About Funtion
-	def bruhaddd(self):
-		messagebox.showinfo("asdfsfasdfsdfasdf Text Editor","A Simple hehe Editor\nCreated using he.")
 
 	# Defining shortcuts Funtion
 	def shortcuts(self):
