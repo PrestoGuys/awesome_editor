@@ -155,6 +155,8 @@ class TextEditor:
 		self.helpmenu = Menu(self.menubar,font=(configfont,12),activebackground="skyblue",tearoff=0)
 		# Adding About Command
 		self.helpmenu.add_command(label="About",command=self.infoabout)
+
+		self.helpmenu.add_command(label="In-Depth About",command=self.indepthabout)
 		# Cascading helpmenu to menubar
 		self.menubar.add_cascade(label="Help", menu=self.helpmenu)
 
@@ -205,6 +207,7 @@ class TextEditor:
 
 	# Defining Open File Funtion
 	def openfile(self,*args):
+		self.txtarea.config(state='normal')
 		# Exception handling
 		try:
 			# Asking for file to open
@@ -328,6 +331,24 @@ class TextEditor:
 	def infoabout(self):
 		messagebox.showinfo("About Awesome Editor","Awesome Editor\nv0.0.1 - BETA\nMade By PrestoGuys in 2024\nLicense: https://www.gnu.org/licenses/gpl-3.0.txt")
 
+
+	def indepthabout(self):
+		message ='''README - Awesome Editor
+=======================
+	
+1 - About
+=========
+v0.0.1 - BETA!!!
+
+     The Awesome Editor is a code editor written in Python 
+using Tkinter.
+
+'''
+	
+		self.txtarea.delete("1.0",END)
+		self.txtarea.pack(expand=True)
+		self.txtarea.insert('end', message)
+		self.txtarea.config(state='disabled')
 
 	# Defining shortcuts Funtion
 	def shortcuts(self):
