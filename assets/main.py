@@ -29,9 +29,9 @@ class TextEditor:
 			configtoml = toml.load(f)
 
 
-		configtheme = configtoml['Settings']['Theme'] # gets theme from config
-		configfont = configtoml['Settings']['Font']   # gets font from config
-
+		configtheme     = configtoml['Settings']['Theme']            # gets theme
+		configfont      = configtoml['Settings']['Editor_Font']      # gets editor font
+		textboxfontsize = configtoml['Settings']['Editor_Font_Size'] # gets editor font size
 
 		# sets background color from cofig file
 		if configtheme == 'dark':
@@ -162,8 +162,8 @@ class TextEditor:
 		# Creating Scrollbar
 		scrol_y = Scrollbar(self.root,orient=VERTICAL)
 		
-		# Creating Text Area
-		self.txtarea = Text(self.root, yscrollcommand=scrol_y.set, font=(configfont,15), state="normal", relief=GROOVE, bg=bgcolor, fg=fgcolor, borderwidth=0) # cursor="trek"
+		# creates the text box to edit text
+		self.txtarea = Text(self.root, yscrollcommand=scrol_y.set, font=(configfont, textboxfontsize), state="normal", relief=GROOVE, bg=bgcolor, fg=fgcolor, borderwidth=0) # cursor="trek"
 		
 		# Packing scrollbar to root window
 		scrol_y.pack(side=RIGHT,fill=Y)

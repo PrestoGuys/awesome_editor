@@ -1,3 +1,5 @@
 [Settings]
-Theme = "dark"
-Font = "JetBrains Mono NL"
+Editor_Font      = "JetBrains Mono NL"
+Editor_Font_Size = 15
+
+Theme     = "dark"
