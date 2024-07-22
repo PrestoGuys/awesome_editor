@@ -24,3 +24,28 @@
 		#self.root.title('Starting Awesome Editor')
 		# Window Geometry
 		#self.root.geometry("1200x700+200+150")
+
+
+
+
+
+
+
+
+
+
+
+
+
+		
+
+		'''
+		message = 'gg'
+		
+		self.txtarea.delete("1.0",END)
+		self.txtarea.pack(expand=True)
+		self.txtarea.insert('end', message)
+		self.txtarea.config(state='disabled')
+		self.settitle()
+		self.status.set("Opened GNU GPL 3 License")
+		'''

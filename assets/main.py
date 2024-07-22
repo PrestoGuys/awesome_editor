@@ -445,17 +445,6 @@ SUCH DAMAGES.
 
 		self.status.set("Opened GNU GPL 3 License")
 
-
-		'''
-		message = 'gg'
-		
-		self.txtarea.delete("1.0",END)
-		self.txtarea.pack(expand=True)
-		self.txtarea.insert('end', message)
-		self.txtarea.config(state='disabled')
-		self.settitle()
-		self.status.set("Opened GNU GPL 3 License")
-		'''
 	# binds key shortcuts
 	def shortcuts(self):
 		# Binding Ctrl+n to newfile funtion
