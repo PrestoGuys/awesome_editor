@@ -431,7 +431,7 @@ SUCH DAMAGES.
 	def licenseread(self):
 		self.txtarea.config(state='normal')
 		# opening file in readmode
-		infile = open('extra/texts/LICENSE',"r")
+		infile = open('extra/texts/LICENSE.txt',"r")
 		# Clearing text area
 		self.txtarea.delete("1.0",END)
 		# Inserting data Line by line into text area
