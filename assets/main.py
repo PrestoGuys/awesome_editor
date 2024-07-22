@@ -5,9 +5,8 @@
 # Credit to www.codespeedy.com for some starter code.
 # Link: https://www.codespeedy.com/create-a-text-editor-in-python/
 
-# Importing Required Libraries 
+# Importing Required Libraries
 import toml
-#import webbrowser
 
 # Inporting Tkinter
 import tkinter as tk
@@ -32,6 +31,7 @@ class TextEditor:
 		configtheme     = configtoml['Settings']['Theme']            # gets theme
 		configfont      = configtoml['Settings']['Editor_Font']      # gets editor font
 		textboxfontsize = configtoml['Settings']['Editor_Font_Size'] # gets editor font size
+
 
 		# sets background color from cofig file
 		if configtheme == 'dark':
@@ -66,21 +66,26 @@ class TextEditor:
 		window_width  = 1100
 		window_height = 750
 
-		# prints window width & height
-		print(window_width)
-		print(window_height)
 
 		# gets screen_width and screen_height
 		screen_width  = self.root.winfo_screenwidth()
 		screen_height = self.root.winfo_screenheight()
 
-		# prints screen width and height
-		print(screen_width)
-		print(screen_height)
 
 		# gets senter of the screen
 		center_x = int(screen_width/2 - window_width / 2)
 		center_y = int(screen_height/2 - window_height / 2)
+
+
+		print(window_width)  # prints window width
+		print(window_height) # prints window height
+		print('')
+		print(screen_width)  # prints screen width
+		print(screen_height) # prints screen height
+		print('')
+		print(center_x)      # prints center of the screen x coord
+		print(center_y)      # prints center of the screen y coord
+
 
 		# sets window size and centers it
 		self.root.geometry(f'{window_width}x{window_height}+{center_x}+{center_y}')
@@ -341,16 +346,23 @@ class TextEditor:
 v0.0.1 - BETA!!!
 
      The Awesome Editor is a code editor written in Python 
-using Tkinter.
+using Tkinter. It is still being developed. It was made by
+PrestoGuys in 2024.
 
+2 - Links
+=========
+License      | https://www.gnu.org/licenses/gpl-3.0.txt
+Github Repo  | https://github.com/PrestoGuys/awesome_editor
+
+Starter Code | https://www.codespeedy.com/create-a-text-editor-in-python/
 '''
-	
+		
 		self.txtarea.delete("1.0",END)
 		self.txtarea.pack(expand=True)
 		self.txtarea.insert('end', message)
 		self.txtarea.config(state='disabled')
 
-	# Defining shortcuts Funtion
+	# binds key shortcuts
 	def shortcuts(self):
 		# Binding Ctrl+n to newfile funtion
 		self.txtarea.bind("<Control-n>",self.newfile)
