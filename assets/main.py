@@ -6,6 +6,26 @@
 # Link: https://www.codespeedy.com/create-a-text-editor-in-python/
 
 # Importing Required Libraries
+
+# Awesome Editor v0.0.1
+# Made By PrestoGuys in 2024
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <https://www.gnu.org/licenses/>.
+
+
+
+
 import toml
 
 # Inporting Tkinter
@@ -23,6 +43,51 @@ def main():
 
 class TextEditor:
 	def __init__(self, root):
+		print('''
+Awesome Editor v0.0.1
+Made By PrestoGuys in 2024
+==========================
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program. If not, see <https://www.gnu.org/licenses/>.
+
+=====================================================================
+(From License)
+
+	15. Disclaimer of Warranty.
+
+	THERE IS NO WARRANTY FOR THE PROGRAM, TO THE EXTENT PERMITTED BY
+APPLICABLE LAW.  EXCEPT WHEN OTHERWISE STATED IN WRITING THE COPYRIGHT
+HOLDERS AND/OR OTHER PARTIES PROVIDE THE PROGRAM "AS IS" WITHOUT WARRANTY
+OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO,
+THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+PURPOSE.  THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE PROGRAM
+IS WITH YOU.  SHOULD THE PROGRAM PROVE DEFECTIVE, YOU ASSUME THE COST OF
+ALL NECESSARY SERVICING, REPAIR OR CORRECTION.
+
+	16. Limitation of Liability.
+
+	IN NO EVENT UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO IN WRITING
+WILL ANY COPYRIGHT HOLDER, OR ANY OTHER PARTY WHO MODIFIES AND/OR CONVEYS
+THE PROGRAM AS PERMITTED ABOVE, BE LIABLE TO YOU FOR DAMAGES, INCLUDING ANY
+GENERAL, SPECIAL, INCIDENTAL OR CONSEQUENTIAL DAMAGES ARISING OUT OF THE
+USE OR INABILITY TO USE THE PROGRAM (INCLUDING BUT NOT LIMITED TO LOSS OF
+DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR THIRD
+PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS),
+EVEN IF SUCH HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF
+SUCH DAMAGES.
+''')
+
 		# opens the config file and saves it in a variable 
 		with open('CONFIG/main.toml', 'r') as f:
 			configtoml = toml.load(f)
@@ -117,13 +182,13 @@ class TextEditor:
 		self.status.set("Welcome to Awesome Editor")
 
 		# Creating Menubar
-		self.menubar = Menu(self.root,font=(configfont,15),activebackground="skyblue")
+		self.menubar = Menu(self.root,font=(configfont,15),activebackground="#990000")
 		# Configuring menubar on root window
 		self.root.config(menu=self.menubar)
 
 
 		# Creating File Menu
-		self.filemenu = Menu(self.menubar,font=(configfont,12),activebackground="skyblue",tearoff=0)
+		self.filemenu = Menu(self.menubar,font=(configfont,12),activebackground="#990000",tearoff=0)
 		# Adding New file Command
 		self.filemenu.add_command(label="New",accelerator="Ctrl+N",command=self.newfile)
 		# Adding Open file Command
@@ -141,7 +206,7 @@ class TextEditor:
 
 
 		# Creating Edit Menu
-		self.editmenu = Menu(self.menubar,font=(configfont,12),activebackground="skyblue",tearoff=0)
+		self.editmenu = Menu(self.menubar,font=(configfont,12),activebackground="#990000",tearoff=0)
 		# Adding Cut text Command
 		self.editmenu.add_command(label="Cut",accelerator="Ctrl+X",command=self.cut)
 		# Adding Copy text Command
@@ -157,11 +222,13 @@ class TextEditor:
 
 
 		# Creating Help Menu
-		self.helpmenu = Menu(self.menubar,font=(configfont,12),activebackground="skyblue",tearoff=0)
+		self.helpmenu = Menu(self.menubar,font=(configfont,12),activebackground="#990000",tearoff=0)
 		# Adding About Command
 		self.helpmenu.add_command(label="About",command=self.infoabout)
 
-		self.helpmenu.add_command(label="In-Depth About",command=self.indepthabout)
+		self.helpmenu.add_command(label="README",command=self.indepthabout)
+		self.helpmenu.add_command(label="License",command=self.licenseread)
+
 		# Cascading helpmenu to menubar
 		self.menubar.add_cascade(label="Help", menu=self.helpmenu)
 
@@ -201,6 +268,7 @@ class TextEditor:
 
 	# Defining New file Function
 	def newfile(self,*args):
+		self.txtarea.config(state='normal')
 		# Clearing the Text Area
 		self.txtarea.delete("1.0",END)
 		# Updating filename as None
@@ -237,6 +305,7 @@ class TextEditor:
 
 	# Defining Save File Funtion
 	def savefile(self,*args):
+		self.txtarea.config(state='normal')
 		# Exception handling
 		try:
 			# checking if filename not none
@@ -260,6 +329,7 @@ class TextEditor:
 
 	# Defining Save As File Funtion
 	def saveasfile(self,*args):
+		self.txtarea.config(state='normal')
 		# Exception handling
 		try:
 			# Asking for file name and type to save
@@ -291,18 +361,22 @@ class TextEditor:
 
 	# Defining Cut Funtion
 	def cut(self,*args):
+		self.txtarea.config(state='normal')
 		self.txtarea.event_generate("<<Cut>>")
 
 	# Defining Copy Funtion
 	def copy(self,*args):
+		self.txtarea.config(state='normal')
 		self.txtarea.event_generate("<<Copy>>")
 
 	# Defining Paste Funtion
 	def paste(self,*args):
+		self.txtarea.config(state='normal')
 		self.txtarea.event_generate("<<Paste>>")
 
 	# Defining Undo Funtion
 	def undo(self,*args):
+		self.txtarea.config(state='normal')
 		# Exception handling
 		try:
 			# checking if filename not none
@@ -338,30 +412,50 @@ class TextEditor:
 
 
 	def indepthabout(self):
-		message ='''README - Awesome Editor
-=======================
-	
-1 - About
-=========
-v0.0.1 - BETA!!!
+		self.txtarea.config(state='normal')
+		# opening file in readmode
+		infile = open('extra/texts/README_MESSAGE.txt',"r")
+		# Clearing text area
+		self.txtarea.delete("1.0",END)
+		# Inserting data Line by line into text area
+		for line in infile:
+			self.txtarea.insert(END,line)
 
-     The Awesome Editor is a code editor written in Python 
-using Tkinter. It is still being developed. It was made by
-PrestoGuys in 2024.
+		self.txtarea.config(state='disabled')
 
-2 - Links
-=========
-License      | https://www.gnu.org/licenses/gpl-3.0.txt
-Github Repo  | https://github.com/PrestoGuys/awesome_editor
+		self.title.set('README')
+		self.root.title('Awesome Editor - README')
 
-Starter Code | https://www.codespeedy.com/create-a-text-editor-in-python/
-'''
+		self.status.set("Opened README")
+
+	def licenseread(self):
+		self.txtarea.config(state='normal')
+		# opening file in readmode
+		infile = open('extra/texts/LICENSE',"r")
+		# Clearing text area
+		self.txtarea.delete("1.0",END)
+		# Inserting data Line by line into text area
+		for line in infile:
+			self.txtarea.insert(END,line)
+
+		self.txtarea.config(state='disabled')
+		
+		self.title.set('License')
+		self.root.title('Awesome Editor - License')
+
+		self.status.set("Opened GNU GPL 3 License")
+
+
+		'''
+		message = 'gg'
 		
 		self.txtarea.delete("1.0",END)
 		self.txtarea.pack(expand=True)
 		self.txtarea.insert('end', message)
 		self.txtarea.config(state='disabled')
-
+		self.settitle()
+		self.status.set("Opened GNU GPL 3 License")
+		'''
 	# binds key shortcuts
 	def shortcuts(self):
 		# Binding Ctrl+n to newfile funtion
