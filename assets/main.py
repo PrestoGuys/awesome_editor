@@ -24,7 +24,7 @@
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 
-import toml
+import tomllib
 
 # Inporting Tkinter
 import tkinter as tk
@@ -87,7 +87,7 @@ SUCH DAMAGES.
 ''')
 
 		# opens the config file and saves it in a variable 
-		with open('CONFIG/main.toml', 'r') as f:
+		with open('CONFIG/main.toml', 'rb') as f:
 			configtoml = toml.load(f)
 
 
@@ -123,6 +123,7 @@ SUCH DAMAGES.
 
 		# assigns root
 		self.root = root
+		toml = tomllib
 
 		
 		# window width and window height of the program
