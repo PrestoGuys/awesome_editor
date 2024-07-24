@@ -24,8 +24,6 @@
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 
-
-
 import toml
 
 # Inporting Tkinter
@@ -38,7 +36,7 @@ from tkinter import filedialog
 
 # links to the text editor class?
 def main():
-	TextEditor()
+	TextEditor
 
 
 class TextEditor:
@@ -465,9 +463,6 @@ SUCH DAMAGES.
 
 		self.txtarea.bind("<Control-u>",self.undo)
 
-# Creating TK Container
-root = Tk()
-# Passing Root to TextEditor Class
-TextEditor(root)
-# Root Window Looping
-root.mainloop()
+root = Tk() # creating TK container
+TextEditor(root) # passing root to text editor class
+root.mainloop() # root window loop
