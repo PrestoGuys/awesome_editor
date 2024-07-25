@@ -1,3 +1,4 @@
-# entrance point file
-from assets import main
-main.main()
+# entry point file
+import main
+
+main.TextEditor()
