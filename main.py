@@ -153,8 +153,7 @@ SUCH DAMAGES.
         self.title = StringVar()  # declare title variable
         self.status = StringVar()  # declare status variable
 
-        self.titlebar = Label(self.root, textvariable=self.title, font=(configfont, 15), bd=2,
-                              relief=GROOVE)  # creating titlebar
+        self.titlebar = Label(self.root, textvariable=self.title, font=(configfont, 15), bd=2, relief=GROOVE)  # creating titlebar
         self.titlebar.pack(side=TOP, fill=BOTH)  # packing titlebar to root window
         self.settitle()  # Calling Settitle Function
 
@@ -165,12 +164,10 @@ SUCH DAMAGES.
         # Initializing Status
         self.status.set("Welcome to Awesome Editor")
 
-
         # Creating Menubar
         self.menubar = Menu(self.root, font=(configfont, 15), activebackground="#990000")
         # Configuring menubar on root window
         self.root.config(menu=self.menubar)
-
 
         # Creating File Menu
         self.filemenu = Menu(self.menubar, font=(configfont, 12), activebackground="#990000", tearoff=0)
@@ -399,7 +396,7 @@ SUCH DAMAGES.
     def indepthabout(self):
         self.txtarea.config(state='normal')
         # opening file in readmode
-        infile = open('extra/texts/README_MESSAGE.txt', "r")
+        infile = open('assets/texts/readme-message.txt', "r")
         # Clearing text area
         self.txtarea.delete("1.0", END)
         # Inserting data Line by line into text area
@@ -416,7 +413,7 @@ SUCH DAMAGES.
     def licenseread(self):
         self.txtarea.config(state='normal')
         # opening file in readmode
-        infile = open('extra/texts/LICENSE.txt', "r")
+        infile = open('assets/texts/license.txt', "r")
         # Clearing text area
         self.txtarea.delete("1.0", END)
         # Inserting data Line by line into text area
