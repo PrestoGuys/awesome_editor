@@ -162,7 +162,7 @@ SUCH DAMAGES.
         # Packing status bar to root window
         self.statusbar.pack(side=BOTTOM, fill=BOTH)
         # Initializing Status
-        self.status.set("Welcome to Awesome Editor")
+        self.status.set("Welcome to The Awesome Editor")
 
         # Creating Menubar
         self.menubar = Menu(self.root, font=(configfont, 15), activebackground="#990000")
