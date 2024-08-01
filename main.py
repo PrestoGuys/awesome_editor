@@ -83,6 +83,11 @@ SUCH DAMAGES.
 
         toml = tomllib
 
+
+
+
+
+
         bgcolor = None
         fgcolor = None
 
@@ -153,9 +158,22 @@ SUCH DAMAGES.
         self.title = StringVar()  # declare title variable
         self.status = StringVar()  # declare status variable
 
+
+        photo = PhotoImage(file = "assets/icons/save.png") 
+
+
+        # Creating Statusbar
+        self.hhbar = Button(self.root, text = 'Click Me !', image = photo).pack(side = TOPLEFT)
+        # Packing status bar to root window
+        #self.hhbar.pack(side=TOP, fill=BOTH)
+
+
+
         self.titlebar = Label(self.root, textvariable=self.title, font=(configfont, 15), bd=2, relief=GROOVE)  # creating titlebar
         self.titlebar.pack(side=TOP, fill=BOTH)  # packing titlebar to root window
         self.settitle()  # Calling Settitle Function
+
+
 
         # Creating Statusbar
         self.statusbar = Label(self.root, textvariable=self.status, font=(configfont, 15), bd=2, relief=GROOVE)
@@ -409,6 +427,18 @@ SUCH DAMAGES.
         self.root.title('Awesome Editor - README')
 
         self.status.set("Opened README")
+
+
+
+
+    def gghe(self):
+        print("Hello, World!")
+
+
+
+
+
+
 
     def licenseread(self):
         self.txtarea.config(state='normal')
