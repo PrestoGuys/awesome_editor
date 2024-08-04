@@ -163,7 +163,7 @@ SUCH DAMAGES.
 
 
         # Creating Statusbar
-        self.hhbar = Button(self.root, text = 'Click Me !', image = photo).pack(side = TOPLEFT)
+        self.hhbar = Button(self.root, text = 'Click Me !', image = photo).pack(side = TOP)
         # Packing status bar to root window
         #self.hhbar.pack(side=TOP, fill=BOTH)
 
@@ -353,7 +353,7 @@ SUCH DAMAGES.
 
     # Defining Exit Funtion
     def exit(self, *args):
-        op = messagebox.askyesno("WARNING", "Your Unsaved Data May be Lost!!")
+        op = messagebox.askyesno("Exit Warning", "Your unsaved work will be lost!")
         if op > 0:
             self.root.destroy()
         else:
