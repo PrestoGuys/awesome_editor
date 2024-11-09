@@ -1,9 +1,7 @@
-README - Awesome Editor
-=====================================================
+Awesome Editor Manual r1
+PrestoGuys
 
-
-0 - WARRANTY DISCLAIMER
-=======================
+DISCLAIMER
 Awesome Editor v0.0.1 - A simple editor made in Python3 with Tk
 Copyright (C) <2024>  <PrestoGuys>
 
@@ -18,21 +16,13 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with this program.  If not, see <https://www.gnu.org/licenses/>
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+Key Commands
+1. Exiting
+	Exit - Control+Q
+2. Cut, Copy, & Paste
+	Cut - Control+X
+	Copy - Control+C
+	Paste - Control+V
 
-1 - About
-=========
-v0.0.1 - BETA!!!
-
-     The Awesome Editor is a code editor written in Python 
-using Tkinter. It is still being developed. It was made by
-PrestoGuys in 2024.
-
-
-2 - Links
-=========
-License      | https://www.gnu.org/licenses/gpl-3.0.txt
-Github Repo  | https://github.com/PrestoGuys/awesome_editor
-
-Starter Code | https://www.codespeedy.com/create-a-text-editor-in-python/

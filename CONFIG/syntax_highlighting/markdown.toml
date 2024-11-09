@@ -1,7 +1,0 @@
-# MarkDown Syntax Highlighting
-
-[Main]
-lang     = 'markdown'
-file_ext = ['md','mkd','mdwn','mdown','mdtxt','mdtext','markdown','text']
-
-[Keywords]

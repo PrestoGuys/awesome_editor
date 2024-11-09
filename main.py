@@ -5,10 +5,8 @@
 # Credit to www.codespeedy.com for some starter code.
 # Link: https://www.codespeedy.com/create-a-text-editor-in-python/
 #
-# Importing Required Libraries
-#
-# Awesome Editor v0.0.1
-# Made By PrestoGuys in 2024
+# Awesome Editor v0.0.1 - A simple editor made in Python3 with Tk
+# Copyright (C) <2024>  <PrestoGuys>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -21,112 +19,42 @@
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
-# along with this program. If not, see <https://www.gnu.org/licenses/>.
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
-import tomllib
+import json
 
-# Importing Tkinter
-#import tkinter as tk
 from tkinter import *
-#from tkinter import ttk
 from tkinter import messagebox
 from tkinter import filedialog
+
+from beggmessege import *
 
 
 class TextEditor:
     def __init__(self, root):
-        print('''
-Awesome Editor v0.0.1
-Made By PrestoGuys in 2024
-==========================
-
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program. If not, see <https://www.gnu.org/licenses/>.
-
-=====================================================================
-(From License)
-
-	15. Disclaimer of Warranty.
-
-	THERE IS NO WARRANTY FOR THE PROGRAM, TO THE EXTENT PERMITTED BY
-APPLICABLE LAW.  EXCEPT WHEN OTHERWISE STATED IN WRITING THE COPYRIGHT
-HOLDERS AND/OR OTHER PARTIES PROVIDE THE PROGRAM "AS IS" WITHOUT WARRANTY
-OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO,
-THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
-PURPOSE.  THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE PROGRAM
-IS WITH YOU.  SHOULD THE PROGRAM PROVE DEFECTIVE, YOU ASSUME THE COST OF
-ALL NECESSARY SERVICING, REPAIR OR CORRECTION.
-
-	16. Limitation of Liability.
-
-	IN NO EVENT UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO IN WRITING
-WILL ANY COPYRIGHT HOLDER, OR ANY OTHER PARTY WHO MODIFIES AND/OR CONVEYS
-THE PROGRAM AS PERMITTED ABOVE, BE LIABLE TO YOU FOR DAMAGES, INCLUDING ANY
-GENERAL, SPECIAL, INCIDENTAL OR CONSEQUENTIAL DAMAGES ARISING OUT OF THE
-USE OR INABILITY TO USE THE PROGRAM (INCLUDING BUT NOT LIMITED TO LOSS OF
-DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR THIRD
-PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS),
-EVEN IF SUCH HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF
-SUCH DAMAGES.
-''')
-
-        toml = tomllib
-
-
-
-
-
+        beggmessege()
 
         bgcolor = None
         fgcolor = None
 
         # opens the config file and saves it in a variable
-        with open('CONFIG/main.toml', 'rb') as f:
-            configtoml = toml.load(f)
+        with open('CONFIG/config.json', 'r') as file:
+            data = json.load(file)
 
-        configtheme = configtoml['Settings']['Theme']  # gets theme
-        configfont = configtoml['Settings']['Editor_Font']  # gets editor font
-        textboxfontsize = configtoml['Settings']['Editor_Font_Size']  # gets editor font size
+        configtheme = "light"
+        configfont = data['Editor_Font']  # gets editor font
+        textboxfontsize = data['Editor_Font_Size']  # gets editor font size
 
-        # sets background color from cofig file
-        if configtheme == 'dark':
-            bgcolor = '#333333'
-
-        if configtheme == 'light':
-            bgcolor = '#fdfdfd'
-
-        # sets foreground color from cofig file
-        if configtheme == 'dark':
-            fgcolor = '#fdfdfd'
-
-        if configtheme == 'light':
-            fgcolor = '#141414'
-
-        # prints the config gile settings
-        print('Config: ')
-        print(configtheme)
-        print(configfont)
-        print('')
-        print(bgcolor)
-        print(fgcolor)
+        bgcolor = data['Editor_Color']
+        fgcolor = data['Editor_Font_Color']
 
         # assigns root
         self.root = root
 
         # window width and window height of the program
-        window_width = 1100
-        window_height = 750
+        window_width = 800
+        window_height = 780
 
         # gets screen_width and screen_height
         screen_width = self.root.winfo_screenwidth()
@@ -136,14 +64,6 @@ SUCH DAMAGES.
         center_x = int(screen_width / 2 - window_width / 2)
         center_y = int(screen_height / 2 - window_height / 2)
 
-        print(window_width)  # prints window width
-        print(window_height)  # prints window height
-        print('')
-        print(screen_width)  # prints screen width
-        print(screen_height)  # prints screen height
-        print('')
-        print(center_x)  # prints center of the screen x coord
-        print(center_y)  # prints center of the screen y coord
 
         # sets window size and centers it
         self.root.geometry(f'{window_width}x{window_height}+{center_x}+{center_y}')
@@ -159,36 +79,20 @@ SUCH DAMAGES.
         self.status = StringVar()  # declare status variable
 
 
-        photo = PhotoImage(file = "assets/icons/save.png") 
 
 
-        # Creating Statusbar
-        self.hhbar = Button(self.root, text = 'Click Me !', image = photo).pack(side = TOP)
-        # Packing status bar to root window
-        #self.hhbar.pack(side=TOP, fill=BOTH)
+        self.titlebar = Label(self.root, textvariable=self.title, font=("sans-serif", 10), bd=2, anchor="w", relief=GROOVE)  # creating titlebar
+        self.titlebar.pack(side=BOTTOM, fill=BOTH)  # packing titlebar to root window
+        self.settitle("Welcome to The Awesome Editor")  # Calling Settitle Function
 
-
-
-        self.titlebar = Label(self.root, textvariable=self.title, font=(configfont, 15), bd=2, relief=GROOVE)  # creating titlebar
-        self.titlebar.pack(side=TOP, fill=BOTH)  # packing titlebar to root window
-        self.settitle()  # Calling Settitle Function
-
-
-
-        # Creating Statusbar
-        self.statusbar = Label(self.root, textvariable=self.status, font=(configfont, 15), bd=2, relief=GROOVE)
-        # Packing status bar to root window
-        self.statusbar.pack(side=BOTTOM, fill=BOTH)
-        # Initializing Status
-        self.status.set("Welcome to The Awesome Editor")
 
         # Creating Menubar
-        self.menubar = Menu(self.root, font=(configfont, 15), activebackground="#990000")
+        self.menubar = Menu(self.root, font=("sans-serif", 10), activebackground="#aaaaaa")
         # Configuring menubar on root window
         self.root.config(menu=self.menubar)
 
         # Creating File Menu
-        self.filemenu = Menu(self.menubar, font=(configfont, 12), activebackground="#990000", tearoff=0)
+        self.filemenu = Menu(self.menubar, font=("sans-serif", 10), activebackground="#aaaaaa", tearoff=0)
         # Adding New file Command
         self.filemenu.add_command(label="New", accelerator="Ctrl+N", command=self.newfile)
         # Adding Open file Command
@@ -205,7 +109,7 @@ SUCH DAMAGES.
         self.menubar.add_cascade(label="File", menu=self.filemenu)
 
         # Creating Edit Menu
-        self.editmenu = Menu(self.menubar, font=(configfont, 12), activebackground="#990000", tearoff=0)
+        self.editmenu = Menu(self.menubar, font=("sans-serif", 10), activebackground="#aaaaaa", tearoff=0)
         # Adding Cut text Command
         self.editmenu.add_command(label="Cut", accelerator="Ctrl+X", command=self.cut)
         # Adding Copy text Command
@@ -220,12 +124,13 @@ SUCH DAMAGES.
         self.menubar.add_cascade(label="Edit", menu=self.editmenu)
 
         # Creating Help Menu
-        self.helpmenu = Menu(self.menubar, font=(configfont, 12), activebackground="#990000", tearoff=0)
+        self.helpmenu = Menu(self.menubar, font=("sans-serif", 10), activebackground="#aaaaaa", tearoff=0)
         # Adding About Command
         self.helpmenu.add_command(label="About", command=self.infoabout)
-
         self.helpmenu.add_command(label="README", command=self.indepthabout)
         self.helpmenu.add_command(label="License", command=self.licenseread)
+        self.helpmenu.add_separator()
+        self.helpmenu.add_command(label="Manual", command=self.manual)
 
         # Cascading helpmenu to menubar
         self.menubar.add_cascade(label="Help", menu=self.helpmenu)
@@ -248,7 +153,7 @@ SUCH DAMAGES.
         self.shortcuts()
 
     # Defining settitle function
-    def settitle(self):
+    def settitle(self, status):
         # Checking if Filename is not None
         if self.filename:
             # Updating Title as filename
@@ -258,10 +163,8 @@ SUCH DAMAGES.
             # Updating Title as Untitled
             titlefile = "Untitled"
 
-        print(titlefile)
-
-        self.title.set(titlefile)
-        self.root.title('Awesome Editor' + ' - ' + titlefile)
+        self.title.set(status + " | " + titlefile)
+        self.root.title('Awesome Editor v0.0.1' + ' - ' + titlefile)
 
     # Defining New file Function
     def newfile(self, *args):
@@ -271,9 +174,9 @@ SUCH DAMAGES.
         # Updating filename as None
         self.filename = None
         # Calling settitle funtion
-        self.settitle()
+        self.settitle(" ")
         # updating status
-        self.status.set("New File Created")
+        self.settitle("New File Created")
 
     # Defining Open File Funtion
     def openfile(self, *args):
@@ -295,9 +198,9 @@ SUCH DAMAGES.
                 # Closing the file
                 infile.close()
                 # Calling Set title
-                self.settitle()
+                self.settitle(" ")
                 # Updating Status
-                self.status.set("Opened Successfully")
+                self.settitle("Opened Successfully")
         except Exception as e:
             messagebox.showerror("Exception", e)
 
@@ -317,9 +220,9 @@ SUCH DAMAGES.
                 # Closing File
                 outfile.close()
                 # Calling Set title
-                self.settitle()
+                self.settitle(" ")
                 # Updating Status
-                self.status.set("Saved Successfully")
+                self.settitle("Saved Successfully")
             else:
                 self.saveasfile()
         except Exception as e:
@@ -345,9 +248,9 @@ SUCH DAMAGES.
             # Updating filename as Untitled
             self.filename = untitledfile
             # Calling Set title
-            self.settitle()
+            self.settitle(" ")
             # Updating Status
-            self.status.set("Saved Successfully")
+            self.settitle("Saved Successfully")
         except Exception as e:
             messagebox.showerror("Exception", e)
 
@@ -391,18 +294,18 @@ SUCH DAMAGES.
                 # Closing File
                 infile.close()
                 # Calling Set title
-                self.settitle()
+                self.settitle(" ")
                 # Updating Status
-                self.status.set("Undone Successfully")
+                self.settitle("Undone Successfully")
             else:
                 # Clearing Text Area
                 self.txtarea.delete("1.0", END)
                 # Updating filename as None
                 self.filename = None
                 # Calling Set title
-                self.settitle()
+                self.settitle(" ")
                 # Updating Status
-                self.status.set("Undone Successfully")
+                self.settitle("Undone Successfully")
         except Exception as e:
             messagebox.showerror("Exception", e)
 
@@ -426,7 +329,7 @@ SUCH DAMAGES.
         self.title.set('README')
         self.root.title('Awesome Editor - README')
 
-        self.status.set("Opened README")
+        self.settitle("Opened README")
 
 
 
@@ -455,7 +358,29 @@ SUCH DAMAGES.
         self.title.set('License')
         self.root.title('Awesome Editor - License')
 
-        self.status.set("Opened GNU GPL 3 License")
+        self.settitle("Opened GNU GPL 3 License")
+
+
+    def manual(self):
+        self.txtarea.config(state='normal')
+        # opening file in readmode
+        infile = open('assets/texts/manual.txt', "r")
+        # Clearing text area
+        self.txtarea.delete("1.0", END)
+        # Inserting data Line by line into text area
+        for line in infile:
+            self.txtarea.insert(END, line)
+
+        self.txtarea.config(state='disabled')
+
+        self.title.set('Manual')
+        self.root.title('Awesome Editor - Manual')
+
+        self.settitle("Opened Manual")
+
+
+
+
 
     # binds key shortcuts
     def shortcuts(self):
@@ -469,11 +394,6 @@ SUCH DAMAGES.
         self.txtarea.bind("<Control-a>", self.saveasfile)
         # binding ctrl+a to exit function
         self.txtarea.bind("<Control-q>", self.exit)
-
-        # sets cut, copy, and paste
-        self.txtarea.bind("<Control-x>", self.cut)
-        self.txtarea.bind("<Control-c>", self.copy)
-        self.txtarea.bind("<Control-v>", self.paste)
 
         self.txtarea.bind("<Control-u>", self.undo)
 

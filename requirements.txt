@@ -1,0 +1,7 @@
+# requirements.txt
+
+altgraph==0.17.4
+packaging==24.2
+pyinstaller==6.11.0
+pyinstaller-hooks-contrib==2024.9
+setuptools==75.3.0
