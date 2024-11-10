@@ -1,7 +1,6 @@
 # Awesome Editor
 
 NOTES:
-This may be only for Linux, at least the beta's.
 I don't know if this project will be finished or will become a big thing.
 
 ## Description
