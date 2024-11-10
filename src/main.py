@@ -1,12 +1,5 @@
-# Awesome Editor v0.0.1 - July 16, 2024
-# Made by PrestoGuys in 2024
-# This is the main python file for The Awesome Editor.
-#
-# Credit to www.codespeedy.com for some starter code.
-# Link: https://www.codespeedy.com/create-a-text-editor-in-python/
-#
 # Awesome Editor v0.0.1 - A simple editor made in Python3 with Tk
-# Copyright (C) <2024>  <PrestoGuys>
+# Copyright (C) 2024  PrestoGuys
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -28,18 +21,18 @@ from tkinter import *
 from tkinter import messagebox
 from tkinter import filedialog
 
-from beggmessege import *
+from disclaim import *
 
 
 class TextEditor:
     def __init__(self, root):
-        beggmessege()
+        disclaim()
 
         bgcolor = None
         fgcolor = None
 
         # opens the config file and saves it in a variable
-        with open('CONFIG/config.json', 'r') as file:
+        with open('config/config.json', 'r') as file:
             data = json.load(file)
 
         configtheme = "light"
@@ -53,7 +46,7 @@ class TextEditor:
         self.root = root
 
         # window width and window height of the program
-        window_width = 800
+        window_width = 1100
         window_height = 780
 
         # gets screen_width and screen_height
@@ -127,8 +120,8 @@ class TextEditor:
         self.helpmenu = Menu(self.menubar, font=("sans-serif", 10), activebackground="#aaaaaa", tearoff=0)
         # Adding About Command
         self.helpmenu.add_command(label="About", command=self.infoabout)
-        self.helpmenu.add_command(label="README", command=self.indepthabout)
         self.helpmenu.add_command(label="License", command=self.licenseread)
+        self.helpmenu.add_command(label="Disclaimer", command=self.disclaimer)
         self.helpmenu.add_separator()
         self.helpmenu.add_command(label="Manual", command=self.manual)
 
@@ -164,7 +157,7 @@ class TextEditor:
             titlefile = "Untitled"
 
         self.title.set(status + " | " + titlefile)
-        self.root.title('Awesome Editor v0.0.1' + ' - ' + titlefile)
+        self.root.title('Awesome Editor v0.0.2' + ' - ' + titlefile)
 
     # Defining New file Function
     def newfile(self, *args):
@@ -312,24 +305,8 @@ class TextEditor:
     # Defining About Funtion
     def infoabout(self):
         messagebox.showinfo("About Awesome Editor",
-                            "Awesome Editor\nv0.0.1 - BETA\nMade By PrestoGuys in 2024\nLicense: https://www.gnu.org/licenses/gpl-3.0.txt")
+                            "Awesome Editor\n v0.0.2\nMade By PrestoGuys in 2024\nLicense: https://www.gnu.org/licenses/gpl-3.0.txt")
 
-    def indepthabout(self):
-        self.txtarea.config(state='normal')
-        # opening file in readmode
-        infile = open('assets/texts/readme-message.txt', "r")
-        # Clearing text area
-        self.txtarea.delete("1.0", END)
-        # Inserting data Line by line into text area
-        for line in infile:
-            self.txtarea.insert(END, line)
-
-        self.txtarea.config(state='disabled')
-
-        self.title.set('README')
-        self.root.title('Awesome Editor - README')
-
-        self.settitle("Opened README")
 
 
 
@@ -378,8 +355,22 @@ class TextEditor:
 
         self.settitle("Opened Manual")
 
+    def disclaimer(self):
+        self.txtarea.config(state='normal')
+        # opening file in readmode
+        infile = open('assets/texts/disclaimer.txt', "r")
+        # Clearing text area
+        self.txtarea.delete("1.0", END)
+        # Inserting data Line by line into text area
+        for line in infile:
+            self.txtarea.insert(END, line)
 
+        self.txtarea.config(state='disabled')
 
+        self.title.set('Disclaimer')
+        self.root.title('Awesome Editor - Disclaimer')
+
+        self.settitle("Opened Disclaimer")
 
 
     # binds key shortcuts
