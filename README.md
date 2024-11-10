@@ -1,4 +1,4 @@
-# ![Logo](./assets/graphics/icon.png)Awesome Editor
+# ![Logo](./src/assets/graphics/icon.png)Awesome Editor
 
 NOTES: I don't know if this project will be finished or will become a big thing.
 
