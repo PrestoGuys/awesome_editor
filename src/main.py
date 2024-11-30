@@ -1,4 +1,4 @@
-# Awesome Editor v0.0.1 - A simple editor made in Python3 with Tk
+# Awesome Editor v0.0.2 - A simple editor made in Python3 with Tk
 # Copyright (C) 2024  PrestoGuys
 #
 # This program is free software: you can redistribute it and/or modify
@@ -15,187 +15,131 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
-import json
+import yaml
 
 from tkinter import *
 from tkinter import messagebox
 from tkinter import filedialog
 
-from disclaim import *
+from disclaimer import *
+from ccp import cut, copy, paste
+from open_file import openfile
+from disclaimer_file import disclaimer_file
+from manual import manual
 
 
 class TextEditor:
     def __init__(self, root):
-        disclaim()
-
-        bgcolor = None
-        fgcolor = None
-
-        # opens the config file and saves it in a variable
-        with open('config/config.json', 'r') as file:
-            data = json.load(file)
-
-        configtheme = "light"
-        configfont = data['Editor_Font']  # gets editor font
-        textboxfontsize = data['Editor_Font_Size']  # gets editor font size
-
-        bgcolor = data['Editor_Color']
-        fgcolor = data['Editor_Font_Color']
-
-        # assigns root
-        self.root = root
-
-        # window width and window height of the program
-        window_width = 1100
-        window_height = 780
-
-        # gets screen_width and screen_height
-        screen_width = self.root.winfo_screenwidth()
-        screen_height = self.root.winfo_screenheight()
-
-        # gets senter of the screen
-        center_x = int(screen_width / 2 - window_width / 2)
-        center_y = int(screen_height / 2 - window_height / 2)
+        print_disclaimer()  # Prints the opening warrenty disclaimer
 
 
-        # sets window size and centers it
-        self.root.geometry(f'{window_width}x{window_height}+{center_x}+{center_y}')
-
-        icon = PhotoImage(file="assets/graphics/icon.png")
-        root.iconphoto(True, icon)
-
-        #for the bg color when load
-        self.root.config(bg=bgcolor)
-
-        self.filename = None  # initialize filename
-        self.title = StringVar()  # declare title variable
-        self.status = StringVar()  # declare status variable
+        # Opens the config file and saves it in a variable
+        with open('config/config.yaml', 'r') as file:
+            config_json = yaml.load(file, Loader=yaml.FullLoader)
 
 
+        editor_font = config_json['Font']['Editor_Font']  # Gets editor's font
+        editor_font_size = config_json['Font']['Editor_Font_Size']  # Gets editor's font size
+
+        background_color = config_json['Color']['Editor_Color']  # Gets editor's background color
+        foreground_color = config_json['Color']['Editor_Font_Color']  # Gets editor's foreground color
 
 
-        self.titlebar = Label(self.root, textvariable=self.title, font=("sans-serif", 10), bd=2, anchor="w", relief=GROOVE)  # creating titlebar
-        self.titlebar.pack(side=BOTTOM, fill=BOTH)  # packing titlebar to root window
-        self.settitle("Welcome to The Awesome Editor")  # Calling Settitle Function
+        self.root = root # Assigns root
+
+        # CHANGE THIS!!!! THERE IS MUTCH BETTER WAY THAT PROPERLY CENTERS HERE!: https://stackoverflow.com/a/10018670
+        window_width = 1150  # Set the width of the window
+        window_height = 800  # Set the height of the window
+        screen_width = self.root.winfo_screenwidth()  # Get the screen's width
+        screen_height = self.root.winfo_screenheight()  # Get the screen's height
+        center_x = int(screen_width / 2 - window_width / 2)  # Calculate the x and y coordinates for the window to be centered
+        center_y = int(screen_height / 2 - window_height / 2)  # Calculate the x and y coordinates for the window to be centered
+
+        self.root.geometry(f"{window_width}x{window_height}+{center_x}+{center_y}")  # Set the geometry of the window with the calculated positions
 
 
-        # Creating Menubar
-        self.menubar = Menu(self.root, font=("sans-serif", 10), activebackground="#aaaaaa")
-        # Configuring menubar on root window
-        self.root.config(menu=self.menubar)
+        icon = PhotoImage(file="assets/graphics/icon.png")  # Opens icon file and saves it to a variable
+        root.iconphoto(True, icon)  # Sets icon
 
-        # Creating File Menu
-        self.filemenu = Menu(self.menubar, font=("sans-serif", 10), activebackground="#aaaaaa", tearoff=0)
-        # Adding New file Command
-        self.filemenu.add_command(label="New", accelerator="Ctrl+N", command=self.newfile)
-        # Adding Open file Command
-        self.filemenu.add_command(label="Open", accelerator="Ctrl+O", command=self.openfile)
-        # Adding Save File Command
-        self.filemenu.add_command(label="Save", accelerator="Ctrl+S", command=self.savefile)
-        # Adding Save As file Command
-        self.filemenu.add_command(label="Save As", accelerator="Ctrl+A", command=self.saveasfile)
-        # Adding Seprator
-        self.filemenu.add_separator()
-        # Adding Exit window Command
-        self.filemenu.add_command(label="Exit", accelerator="Ctrl+E", command=self.exit)
-        # Cascading filemenu to menubar
-        self.menubar.add_cascade(label="File", menu=self.filemenu)
 
-        # Creating Edit Menu
-        self.editmenu = Menu(self.menubar, font=("sans-serif", 10), activebackground="#aaaaaa", tearoff=0)
-        # Adding Cut text Command
-        self.editmenu.add_command(label="Cut", accelerator="Ctrl+X", command=self.cut)
-        # Adding Copy text Command
-        self.editmenu.add_command(label="Copy", accelerator="Ctrl+C", command=self.copy)
-        # Adding Paste text command
-        self.editmenu.add_command(label="Paste", accelerator="Ctrl+V", command=self.paste)
-        # Adding Seprator
-        self.editmenu.add_separator()
-        # Adding Undo text Command
-        self.editmenu.add_command(label="Undo", accelerator="Ctrl+U", command=self.undo)
-        # Cascading editmenu to menubar
-        self.menubar.add_cascade(label="Edit", menu=self.editmenu)
+        self.root.config(bg=background_color)  # Set background with backgroun_color
+        self.filename = None  # Initialize filename
+        self.title = StringVar()  # Declare title variable
+        self.status = StringVar()  # Declare status variable
 
-        # Creating Help Menu
-        self.helpmenu = Menu(self.menubar, font=("sans-serif", 10), activebackground="#aaaaaa", tearoff=0)
-        # Adding About Command
-        self.helpmenu.add_command(label="About", command=self.infoabout)
-        self.helpmenu.add_command(label="License", command=self.licenseread)
-        self.helpmenu.add_command(label="Disclaimer", command=self.disclaimer)
-        self.helpmenu.add_separator()
-        self.helpmenu.add_command(label="Manual", command=self.manual)
 
-        # Cascading helpmenu to menubar
-        self.menubar.add_cascade(label="Help", menu=self.helpmenu)
+        self.info_bar = Label(self.root, textvariable=self.title, font=("sans-serif", 10), bd=2, anchor="w", relief=GROOVE)  # Creating info_bar
+        self.info_bar.pack(side=BOTTOM, fill=BOTH)  # Packing info_bar to root window
+        self.settitle("Welcome to Awesome Editor v0.0.2")  # Calling Settitle Function
 
-        # Creating Scrollbar
-        scrol_y = Scrollbar(self.root, orient=VERTICAL)
 
-        # creates the text box to edit text
-        self.txtarea = Text(self.root, yscrollcommand=scrol_y.set, font=(configfont, textboxfontsize), state="normal",
-                            relief=GROOVE, bg=bgcolor, fg=fgcolor, borderwidth=0)  # cursor="trek"
+        self.menubar = Menu(self.root, font=("sans-serif", 10), activebackground="#aaaaaa")  # Creating Menubar
+        self.root.config(menu=self.menubar)  # Configuring menubar on root window
 
-        # Packing scrollbar to root window
-        scrol_y.pack(side=RIGHT, fill=Y)
-        # Adding Scrollbar to text area
-        scrol_y.config(command=self.txtarea.yview)
-        # Packing Text Area to root window
-        self.txtarea.pack(fill=BOTH, expand=1)
+        # Adding file menu to menubar
+        self.filemenu = Menu(self.menubar, font=("sans-serif", 10), activebackground="#aaaaaa", tearoff=0)  # Creating File Menu
+        self.filemenu.add_command(label="New", accelerator="Ctrl+N", command=self.newfile)  # Adding New file Command
+        self.filemenu.add_command(label="Open", accelerator="Ctrl+O", command=lambda: openfile(self.txtarea, self.settitle))  # Adding Open file Command
+        self.filemenu.add_command(label="Save", accelerator="Ctrl+S", command=self.savefile)  # Adding Save File Command
+        self.filemenu.add_command(label="Save As", accelerator="Ctrl+A", command=self.saveasfile)  # Adding Save As file Command
+        self.filemenu.add_separator()  # Adding Seprator
+        self.filemenu.add_command(label="Exit", accelerator="Ctrl+Q", command=self.exit)  # Adding Exit window Command
+        self.menubar.add_cascade(label="File", menu=self.filemenu)  # Cascading filemenu to menubar
 
-        # Calling shortcuts funtion
-        self.shortcuts()
+        # Adding edit menu to menubar
+        self.editmenu = Menu(self.menubar, font=("sans-serif", 10), activebackground="#aaaaaa", tearoff=0)  # Creating Edit Menu
+        self.editmenu.add_command(label="Cut", accelerator="Ctrl+X", command=lambda: cut(self.txtarea))  # Adding Cut text Command
+        self.editmenu.add_command(label="Copy", accelerator="Ctrl+C", command=lambda: copy(self.txtarea))  # Adding Copy text Command
+        self.editmenu.add_command(label="Paste", accelerator="Ctrl+V", command=lambda: paste(self.txtarea))  # Adding paste text Command
+        self.editmenu.add_separator()  # Adding Seprator
+        self.editmenu.add_command(label="Undo", accelerator="Ctrl+U", command=self.undo)  # Adding Undo text Command
+        self.menubar.add_cascade(label="Edit", menu=self.editmenu)  # Cascading editmenu to menubar
 
-    # Defining settitle function
+        # Adding help menu to menubar
+        self.helpmenu = Menu(self.menubar, font=("sans-serif", 10), activebackground="#aaaaaa", tearoff=0)  # Creating Help Menu
+        self.helpmenu.add_command(label="About", command=self.infoabout)  # Adding About Command
+        self.helpmenu.add_command(label="Manual", command=lambda: manual(self.txtarea, self.title, self.root, self.settitle))  # Adding Manual Command
+        self.helpmenu.add_separator()  # Adding Seprator
+        self.helpmenu.add_command(label="License", command=self.licenseread)  # Adding License Command
+        self.helpmenu.add_command(label="Disclaimer", command=lambda: disclaimer_file(self.txtarea, self.title, self.root, self.settitle))  # Adding Disclaimer Command
+        self.menubar.add_cascade(label="Help", menu=self.helpmenu)  # Cascading helpmenu to menubar
+
+
+        scrol_y = Scrollbar(self.root, orient=VERTICAL)  # Creating Scrollbar
+
+
+        self.txtarea = Text(self.root, yscrollcommand=scrol_y.set, font=(editor_font, editor_font_size), state="normal",
+                            relief=GROOVE, bg=background_color, fg=foreground_color, borderwidth=0)  # Text part of the editor
+
+
+        scrol_y.pack(side=RIGHT, fill=Y)  # Packing scrollbar to root window
+        scrol_y.config(command=self.txtarea.yview)  # Adding Scrollbar to text area
+        self.txtarea.pack(fill=BOTH, expand=1)  # Packing Text Area to root window
+
+        self.shortcuts()  # Calling shortcuts funtion
+
+
+    # Sets title of window and status bar, e.g. "Awesome Editor v0.0.2 - Untitled"
     def settitle(self, status):
         # Checking if Filename is not None
         if self.filename:
-            # Updating Title as filename
-            titlefile = self.filename
+            titlefile = self.filename  # Updating Title as filename
 
         else:
-            # Updating Title as Untitled
-            titlefile = "Untitled"
+            titlefile = "Untitled"  # Updating Title as Untitled
+            # self.root.title('Awesome Editor v0.0.2' + ' - ' + titlefile)   (IDK WHY I COMMENTED THIS OUT, I LEAVE IT IN.)
 
         self.title.set(status + " | " + titlefile)
-        self.root.title('Awesome Editor v0.0.2' + ' - ' + titlefile)
+
 
     # Defining New file Function
     def newfile(self, *args):
         self.txtarea.config(state='normal')
-        # Clearing the Text Area
-        self.txtarea.delete("1.0", END)
-        # Updating filename as None
-        self.filename = None
-        # Calling settitle funtion
-        self.settitle(" ")
-        # updating status
-        self.settitle("New File Created")
+        self.txtarea.delete("1.0", END)  # Clearing the Text Area
+        self.filename = None  # Updating filename as None
+        self.settitle(" ")  # Calling settitle funtion
+        self.settitle("New File Created")  # updating status
 
-    # Defining Open File Funtion
-    def openfile(self, *args):
-        self.txtarea.config(state='normal')
-        # Exception handling
-        try:
-            # Asking for file to open
-            self.filename = filedialog.askopenfilename(title="Select file", filetypes=(
-                ("All Files", "*.*"), ("Text Files", "*.txt"), ("Python Files", "*.py")))
-            # checking if filename not none
-            if self.filename:
-                # opening file in readmode
-                infile = open(self.filename, "r")
-                # Clearing text area
-                self.txtarea.delete("1.0", END)
-                # Inserting data Line by line into text area
-                for line in infile:
-                    self.txtarea.insert(END, line)
-                # Closing the file
-                infile.close()
-                # Calling Set title
-                self.settitle(" ")
-                # Updating Status
-                self.settitle("Opened Successfully")
-        except Exception as e:
-            messagebox.showerror("Exception", e)
 
     # Defining Save File Funtion
     def savefile(self, *args):
@@ -254,21 +198,6 @@ class TextEditor:
             self.root.destroy()
         else:
             return
-
-    # Defining Cut Funtion
-    def cut(self, *args):
-        self.txtarea.config(state='normal')
-        self.txtarea.event_generate("<<Cut>>")
-
-    # Defining Copy Funtion
-    def copy(self, *args):
-        self.txtarea.config(state='normal')
-        self.txtarea.event_generate("<<Copy>>")
-
-    # Defining Paste Funtion
-    def paste(self, *args):
-        self.txtarea.config(state='normal')
-        self.txtarea.event_generate("<<Paste>>")
 
     # Defining Undo Funtion
     def undo(self, *args):
@@ -338,47 +267,12 @@ class TextEditor:
         self.settitle("Opened GNU GPL 3 License")
 
 
-    def manual(self):
-        self.txtarea.config(state='normal')
-        # opening file in readmode
-        infile = open('assets/texts/manual.txt', "r")
-        # Clearing text area
-        self.txtarea.delete("1.0", END)
-        # Inserting data Line by line into text area
-        for line in infile:
-            self.txtarea.insert(END, line)
-
-        self.txtarea.config(state='disabled')
-
-        self.title.set('Manual')
-        self.root.title('Awesome Editor - Manual')
-
-        self.settitle("Opened Manual")
-
-    def disclaimer(self):
-        self.txtarea.config(state='normal')
-        # opening file in readmode
-        infile = open('assets/texts/disclaimer.txt', "r")
-        # Clearing text area
-        self.txtarea.delete("1.0", END)
-        # Inserting data Line by line into text area
-        for line in infile:
-            self.txtarea.insert(END, line)
-
-        self.txtarea.config(state='disabled')
-
-        self.title.set('Disclaimer')
-        self.root.title('Awesome Editor - Disclaimer')
-
-        self.settitle("Opened Disclaimer")
-
-
     # binds key shortcuts
     def shortcuts(self):
         # Binding Ctrl+n to newfile function
         self.txtarea.bind("<Control-n>", self.newfile)
         # Binding Ctrl+o to openfile function
-        self.txtarea.bind("<Control-o>", self.openfile)
+        self.txtarea.bind("<Control-o>", lambda: openfile(self.txtarea, self.settitle))
         # Binding Ctrl+s to savefile function
         self.txtarea.bind("<Control-s>", self.savefile)
         # Binding Ctrl+a to saveasfile function
